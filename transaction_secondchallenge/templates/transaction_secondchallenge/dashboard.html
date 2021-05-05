@@ -10,7 +10,7 @@
         <a href="{% url 'transaction:notification' user.id %}" style="margin-left: 3%;">Top-Up Approval Notification</a>
       {% else %}
           <a href="{% url 'transaction:details' user.id %}" style="margin-left: 3%;">My Account</a>
-          <a href="{% url 'transaction:deposit' %}" style="margin-left: 3%;">Deposit AUCs</a>
+          <a href="{% url 'transaction:deposit' %}" style="margin-left: 3%;">Request Deposit AUCs</a>
           <a href="{% url 'transaction:transfer' %}" style="margin-left: 3%;">Transfer Loan</a>
           <a href="{% url 'transaction:history' %}" style="margin-left: 3%;">Transaction History</a>
           <a href="{% url 'transaction:notification' user.id %}" style="margin-left: 3%;">Notification</a>
