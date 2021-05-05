@@ -1,0 +1,18 @@
+{% extends "transaction_secondchallenge/base.html" %}
+{% block registration %}
+    <div style="padding-top: 5%;">
+        <a style="margin-left: 85%;" href="{% url 'login' %}">Have Account Already?</a>
+    </div>
+    <div style="text-align: center; padding-top: 3%;">
+        <form method="post" action="{% url 'transaction:registration'%}">
+            {% csrf_token %}
+            <label for="username">Username:</label>
+            <input type="text" name="username" required><br><br>
+            <label for="password1">Password:</label>
+            <input type="password" name="password1" required><br><br>
+            <label for="password2">Confirm-Password:</label>
+            <input type="password" name="password2" required><br><br>
+            <input style="margin-left: 12%;" type="submit" value="Register">
+        </form>
+    </div>
+{% endblock %}

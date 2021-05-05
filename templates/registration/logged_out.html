@@ -1,0 +1,7 @@
+{% extends "transaction_secondchallenge/base.html" %}
+{% block logout %}
+    <div class="logout_account">
+        <p>Logged out Successfully!</p>
+        <p>Click<a href="{% url 'login' %}"> here</a> to login again.</p>
+    </div>
+{% endblock %}

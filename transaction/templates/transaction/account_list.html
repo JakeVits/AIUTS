@@ -1,0 +1,25 @@
+{% extends "transaction/base.html" %}
+{% block account_list %}
+    <h1 style="text-align:center;">List of Accounts</h1>
+    <br><br><a href="{% url 'aiuts:form_view' %}" style="margin-left: 3%;"><button>Register</button></a>
+    {% if account_list %}
+    <table class="content-table">
+         <thead>
+                <tr>
+                    <td>Number</td>
+                    <td>Account Address</td>
+                </tr>
+         </thead>
+        <tbody>
+        {% for account in account_list %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td><a href="{% url 'aiuts:dashboard' account.acc_add %}">{{ account.acc_add }}</a></td>
+                </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+    {% else %}
+        <h3 style="padding-left: 3%; padding-top: 2%;">There is no available account!</h3>
+    {% endif %}
+{% endblock %}

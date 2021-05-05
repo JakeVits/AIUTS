@@ -1,0 +1,21 @@
+{% extends "transaction/base.html" %}
+{% block dashboard %}
+    <h1>Welcome ({{ request.resolver_match.kwargs.pk }})</h1>
+
+    {% block head%}
+        <ul class="nav-links" >
+            <li>
+                <a href="{% url 'aiuts:details' request.resolver_match.kwargs.pk %}" style="margin-left: 3%;">Account</a>
+            </li>
+            <li>
+                <a href="{% url 'aiuts:transfer' request.resolver_match.kwargs.pk %}" style="margin-left: 3%;">Transfer</a>
+            </li>
+            <li>
+                <a href="{% url 'aiuts:history' request.resolver_match.kwargs.pk %}" style="margin-left: 3%;">Transaction History</a>
+            </li>
+            <li>
+                <a href="{% url 'aiuts:list_view' %}" style="margin-left: 3%;">Leave</a>
+            </li>
+        </ul>
+        {% endblock head %}
+{% endblock %}

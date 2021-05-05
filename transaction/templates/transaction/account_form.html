@@ -1,0 +1,31 @@
+{% extends "transaction/base.html" %}
+{% block form %}
+    <br><br><a href="{% url 'aiuts:list_view' %}" style="margin-left: 3%;"><button>Account List</button></a>
+    <div style="text-align: center; padding-top: 7%;" >
+        <div class="register-form-bg">
+            <form class="register-form" action="{% url 'aiuts:form_view' %}" method="post">
+                {% csrf_token %}
+            <h1>Register Form</h1>
+            <label for="acc_add">Account Address:</label>
+            <input type="text" name="acc_add"><br><br>
+            <label for="password">Password:</label>
+            <input type="password" name="password"><br><br>
+            <label for="balance">Current Balance:</label>
+            <input type="number" value="100.0" name="balance"><br><br>
+            <button type="submit" value="Create" class="btn btn-primary btn-ghost">Create</button>
+            </form>
+        </div>
+<!--        <form  action="{% url 'aiuts:form_view' %}" method="post">-->
+<!--
+
+<!--            <label for="acc_add">Account Address:</label>-->
+<!--            <input type="text" name="acc_add"><br><br>-->
+<!--            <label for="password">Password:</label>-->
+<!--            <input type="password" name="password"><br><br>-->
+<!--            <label for="balance">Current Balance:</label>-->
+<!--            <input type="number" value="100.0" name="balance"><br><br>-->
+<!--            <input style="margin-left: 12%;" type="submit" value="Create">-->
+<!--        </form>-->
+<!--    </div>-->
+{% endblock %}
+

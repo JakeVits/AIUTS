@@ -1,0 +1,44 @@
+{% extends "transaction_secondchallenge/base.html" %}
+
+{% block history %}
+     <div style="padding-top: 5%;padding-left: 5%;">
+        <a href="{% url 'transaction:dashboard' %}">Return to Dashboard</a>
+    </div>
+    <div id="history">
+        {% if history_list %}
+            {% for i in history_list %}
+                <div style="padding-top: 3%; padding-left: 5%;" class="user_detail">
+                    <p><strong>Transaction ID:</strong> {{ i.transaction_id }}</p>
+                    <p><strong>Sender(Me):</strong> {{ i.sender }}</p>
+                    <p><strong>Recipient Account:</strong> {{ i.recipient}}</p>
+                    <p><strong>Transferred Amount:</strong> {{ i.amount }}</p>
+                    <p><strong>Transaction Date:</strong> {{ i.transaction_date }}</p>
+                    {% if i.remark %}
+                        <p><strong>Remark: </strong>{{ i.remark }}</p>
+                    {% endif %}
+                </div>
+
+            {% endfor %}
+        {% else %}
+            <h3 style="padding-left: 3%; padding-top: 2%;">There is no Transaction History!</h3>
+        {% endif %}
+    </div>
+    <script type="text/javascript">
+        function fetch_data(){
+             var url = "{% url 'transaction:history' %}";
+             $.ajax({
+                  url: url,
+                  type: 'get',
+                  success: function(data){
+                       $("#history").load(url + " #history"); //must provide one space before of #history
+                  },
+                  complete:function(data){
+                       setTimeout(fetch_data,3000);
+                  }
+             });
+        }
+        $(document).ready(function(){
+            setTimeout(fetch_data,3000);
+        });
+    </script>
+{% endblock %}

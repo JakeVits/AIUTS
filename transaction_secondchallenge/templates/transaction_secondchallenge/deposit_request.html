@@ -1,0 +1,21 @@
+{% extends "transaction_secondchallenge/base.html" %}
+{% block deposit %}
+    <br><br><a href="{% url 'transaction:dashboard' %}" style="margin-left: 3%;">Return to Dashboard</a>
+    <div style="text-align: center; padding-top: 2%;">
+        <form method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input style="margin-left:21.3%;" type="submit" value="Request">
+        </form>
+    </div>
+{% endblock %}
+
+<!--<form method="post" action="{% url 'transaction:deposit' %}">-->
+<!--            {% csrf_token %}-->
+<!--            <input type="hidden" name="requester" value="{{user.get_username}}"><br><br>-->
+<!--            <label for="request_amount">Request Amount:</label>-->
+<!--            <input type="number" name="request_amount" required><br><br>-->
+<!--            <label for="attachment">Remark:</label>-->
+<!--            <textarea name="attachment"></textarea><br><br>-->
+<!--            <input style="margin-left:11%;" type="submit" value="Request">-->
+<!--        </form>-->

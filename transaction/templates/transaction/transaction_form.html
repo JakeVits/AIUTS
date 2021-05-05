@@ -1,0 +1,32 @@
+{% extends "transaction/base.html" %}
+{% block transaction_form %}
+    <br><br><a href="{% url 'aiuts:dashboard' request.resolver_match.kwargs.pk %}" style="margin-left: 3%;"><button>Return</button></a>
+    <div style="text-align: center; padding-top: 7%;">
+        {% if current_user %}
+            {% for i in current_user %}
+                <p><strong>Balance:</strong> {{i.balance}}</p>
+            {% endfor %}
+        {% endif %}
+        <form action="{% url 'aiuts:transfer' request.resolver_match.kwargs.pk %}" method="post">
+            {% if form.errors %}
+                <p>Invalid Transaction</p>
+            {% endif %}
+            {% csrf_token %}
+            <input type="hidden" name="sender" value="{{request.resolver_match.kwargs.pk}}"><br><br>
+            <label for="recipient">Recipient</label>
+            <select name="recipient">
+                {% if user_list %}
+                    {% for i in user_list %}
+                        <option>{{i.acc_add}}</option>
+                    {% endfor %}
+                {% endif %}
+            </select><br><br>
+            <label for="amount">Amount</label>
+            <input type="number" name="amount"><br><br>
+            <label for="remark">Remark</label>
+            <textarea name="remark"></textarea><br><br>
+            <input style="margin-left:11%;" type="submit" value="Transfer">
+        </form>
+    </div>
+{% endblock %}
+{{ form.as_p }}

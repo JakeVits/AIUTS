@@ -1,0 +1,71 @@
+{% extends "transaction_secondchallenge/base.html" %}
+{% block notification %}
+    <div style="padding-top: 5%;padding-left: 5%;">
+        <a href="{% url 'transaction:dashboard' %}">Return to Dashboard</a>
+    </div>
+        <div id="notification">
+            {% if noty_details %}
+                {% for i in noty_details %}
+                     <div style="padding-left: 5%;
+                        width: 400px;
+                        height: 220px;
+                        background-color: black;
+                        border-radius: 10px 10px 10px 10px;
+                        opacity: 0.8;
+                        margin-left: 5%;
+                        margin-top: 3%;
+                        color: white;">
+                         <i><p style="margin-left: -7%; padding-top: 3.5%;font-size: 13px;">Date: {{i.request_date}}</p></i>
+                         <p style="margin-left: -7%;"><i>Notification From</i>: {{i.requester}}</p>
+                         {% if request.user.is_staff %}
+                            <p style="margin-left: -7%;"><i>Deposit Request Amount</i>: ${{i.request_amount}}</p>
+                         {% else %}
+                            <p style="margin-left: -7%;"><i>Request Amount</i>: ${{i.request_amount}}</p>
+                         {% endif %}
+                         {% if i.attachment %}
+                            <p style="margin-left: -7%;"><i>Message</i>: {{i.attachment}}</p>
+                         {% endif %}
+                         <form method="post" action="{% url 'transaction:approval' user.id %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{i.request_id}}">
+                            <input type="hidden" name="requester" value="{{i.requester}}">
+                            <input type="hidden" name="request_amount" value="{{i.request_amount}}">
+                            <input style="padding-left: 3%; color: #66ffcc; background: black;float:left;" type="submit" value="Approve">
+                         </form>
+                         {% if not request.user.is_staff %}
+                             <form method="post" action="{% url 'transaction:negotiate_form' user.id %}">
+                                 {% csrf_token %}
+                                 <input type="hidden" name="id" value="{{i.request_id}}">
+                                 <input type="hidden" name="requester" value="{{i.requester}}">
+                                 <input style="padding-left: 3%; color: dodgerblue; background: black;float:left;" type="submit" value="Negotiate">
+                             </form>
+                         {% endif %}
+                         <form method="post" action="{% url 'transaction:decline' i.request_id %}">
+                             {% csrf_token %}
+                             <input style="padding-left: 3%; color: #ff4500; background: black;float:left;" type="submit" value="Decline">
+                         </form>
+                     </div>
+                {% endfor %}
+            {% else %}
+                <p style="padding-left: 5%;padding-top: 1%;">No Notification is Available for Now!</p>
+            {% endif %}
+        </div>
+        <script type="text/javascript">
+            function fetch_data(){
+                 var url = "{% url 'transaction:notification' user.id %}";
+                 $.ajax({
+                      url: url,
+                      type: 'get',
+                      success: function(data){
+                           $("#notification").load(url + " #notification"); //must provide one space before of #noti
+                      },
+                      complete:function(data){
+                           setTimeout(fetch_data,3000);
+                      }
+                 });
+            }
+            $(document).ready(function(){
+                setTimeout(fetch_data,3000);
+            });
+        </script>
+{% endblock %}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AIUTS</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<body>
+    {% if form.errors %}
+        {% if form.username.errors or form.password1.errors or form.password2.errors %}
+            <div style="text-align: center;" class="alert alert-danger" role="alert">
+                <b>{{ form.username.errors }}</b>
+                <b>{{ form.password1.errors }}</b>
+                <b>{{ form.password2.errors }}</b>
+            </div>
+        {% else %}
+            <div style="text-align: center;" class="alert alert-danger" role="alert">
+                <p><strong>Username or Password is incorrect!</strong></p>
+            </div>
+        {% endif %}
+    {% endif %}
+    {% if messages %}
+        {% for m in messages %}
+            {% if m.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <div style="text-align: center;" class="alert alert-success" role="alert">{{m}}</div>
+            {% elif m.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+                <div style="text-align: center;" class="alert alert-info" role="alert">{{m}}</div>
+            {% else %}
+                <div style="text-align: center;" class="alert alert-danger" role="alert">{{m}}</div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    {% block dashboard %}{% endblock %}
+    {% block login %}{% endblock %}
+    {% block logout %}{% endblock %}
+    {% block transaction_form %}{% endblock %}
+    {% block registration %}{% endblock %}
+    {% block details %}{% endblock %}
+    {% block deposit %}{% endblock %}
+    {% block payment %}{% endblock %}
+    {% block notification %}{% endblock %}
+    {% block history %}{% endblock %}
+    {% block negotiation_form %}{% endblock %}
+</body>
+</html>

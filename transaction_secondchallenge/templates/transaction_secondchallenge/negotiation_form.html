@@ -1,0 +1,16 @@
+{% extends "transaction_secondchallenge/base.html" %}
+{% block negotiation_form %}
+    <br><br><a href="{% url 'transaction:dashboard' %}" style="margin-left: 3%;">Return to Dashboard</a>
+    <div style="text-align: center; padding-top: 2%;">
+      <form method="post" action="{% url 'transaction:negotiate' user.id %}">
+          {% csrf_token %}
+          <input type="hidden" name="id" value="{% if request_id %}{{request_id}}{% endif %}">
+          <input type="hidden" name="requester" value="{% if requester %}{{requester}}{% endif %}">
+          <label for="amount">Amount</label>
+          <input type="number" name="request_amount"><br><br>
+          <label style="margin-left: 8.3%;" for="remark">Remark</label>
+          <textarea rows="5" cols="40" name="remark"></textarea><br>
+          <input style="margin-left: 27.5%;" type="submit" value="Transfer">
+       </form>
+    </div>
+{% endblock %}

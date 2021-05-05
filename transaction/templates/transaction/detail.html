@@ -1,0 +1,16 @@
+{% extends "transaction/base.html" %}
+{% block details %}
+    {% if detail_list %}
+        {% for i in detail_list %}
+            <div style="padding-top: 5%;padding-left: 5%;">
+                <a href="{% url 'aiuts:dashboard' request.resolver_match.kwargs.pk %}"><button>Return</button></a>
+            </div>
+            <div style="padding-top: 3%; padding-left: 5%;" class="user_detail">
+                <p><strong>My hashed Account Address:</strong> {{ i.acc_add }}</p>
+                <p><strong>My hashed Password:</strong> {{ i.password }}</p>
+                <p><strong>My Balance:</strong> {{ i.balance }}</p>
+                <p><strong>Account Creation Date:</strong> {{ i.created_at }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

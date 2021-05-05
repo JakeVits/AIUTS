@@ -1,0 +1,48 @@
+{% extends "transaction_secondchallenge/base.html" %}
+{% block details %}
+    {% if detail_list %}
+        {% for i in detail_list %}
+            <div style="padding-top: 5%;padding-left: 5%;">
+                <a href="{% url 'transaction:dashboard' %}">Return to Dashboard</a>
+            </div>
+            <div style="padding-top: 3%; padding-left: 5%;">
+                <strong style="float:left;">Username:&nbsp;</strong>
+                <p>{{ i.username }}</p>
+                <strong style="float:left;">Current Balance:&nbsp;</strong>
+                <p id="balance">{{ i.balance }}</p>
+                <p><strong>Account Creation Date:</strong> {{ i.created_at }}</p>
+            </div>
+            <script type="text/javascript">
+                function fetch_data(){
+                     var url = "{% url 'transaction:details' user.id %}";
+                     $.ajax({
+                          url: url,
+                          type: 'get',
+                          success: function(data){
+                               $("#balance").load(url + " #balance"); //must provide one space before of #balance
+                               var new_balance = $("#balance").text();
+                               sessionStorage.setItem("new_balance", new_balance);
+                               new_balance = sessionStorage.getItem("new_balance");
+                               var current_balance = sessionStorage.getItem("current_balance");
+
+                               if(current_balance == null){
+                                    sessionStorage.setItem("current_balance", new_balance);
+                               }
+                               if(current_balance != null && new_balance != current_balance){
+                                    window.alert('Your new balance is: ' + new_balance);
+                                    sessionStorage.removeItem("current_balance");
+                               }
+                               sessionStorage.removeItem("new_balance");
+                          },
+                          complete:function(data){
+                               setTimeout(fetch_data,3000);
+                          }
+                     });
+                }
+                $(document).ready(function(){
+                    setTimeout(fetch_data,3000);
+                });
+            </script>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

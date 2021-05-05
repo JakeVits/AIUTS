@@ -1,0 +1,53 @@
+{% extends "transaction_secondchallenge/base.html" %}
+{% block transaction_form %}
+    <br><br><a href="{% url 'transaction:dashboard' %}" style="margin-left: 3%;">Return to Dashboard</a>
+    <div style="text-align: center; padding-top: 2%;">
+        <div id="balance">
+            {% if current_user_balance %}
+                {% for i in current_user_balance %}
+                    <p><strong>Balance:</strong> {{i.balance}}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <form action="{% url 'transaction:transfer' %}" method="post">
+            {% csrf_token %}
+            {{form.sender.label_tag}} {{form.sender}}<br><br>
+            {{form.recipient.label_tag}} {{form.recipient}}<br><br>
+            {{form.amount.label_tag}} {{form.amount}}<br><br>
+            {{form.remark.label_tag}} <br>{{form.remark}}<br><br>
+            <input style="margin-left:11%;" type="submit" value="Transfer">
+        </form>
+    </div>
+    <script type="text/javascript">
+        function fetch_data(){
+             var url = "{% url 'transaction:transfer' %}";
+             $.ajax({
+                  url: url,
+                  type: 'get',
+                  success: function(data){
+                       $("#balance").load(url + " #balance"); //must provide one space before of #balance
+                  },
+                  complete:function(data){
+                       setTimeout(fetch_data,3000);
+                  }
+             });
+        }
+        $(document).ready(function(){
+            setTimeout(fetch_data,3000);
+        });
+    </script>
+{% endblock %}
+
+<!--<input type="hidden" name="sender" value="{{user.get_username}}"><br><br>-->
+<!--            <label for="recipient">Recipient</label>-->
+<!--            <select name="recipient">-->
+<!--                {% if user_list %}-->
+<!--                    {% for i in user_list %}-->
+<!--                        <option>{{ i.username }}</option>-->
+<!--                    {% endfor %}-->
+<!--                {% endif %}-->
+<!--            </select><br><br>-->
+<!--            <label for="amount">Amount</label>-->
+<!--            <input type="number" name="amount"><br><br>-->
+<!--            <label for="remark">Remark</label>-->
+<!--            <textarea name="remark"></textarea><br><br>-->

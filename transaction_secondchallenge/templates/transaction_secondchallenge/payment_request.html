@@ -1,0 +1,29 @@
+{% extends "transaction_secondchallenge/base.html" %}
+{% block payment %}
+    <br><br><a href="{% url 'transaction:dashboard' %}" style="margin-left: 3%;">Return to Dashboard</a>
+    <div style="text-align: center; padding-top: 2%;">
+        <form action="{% url 'transaction:request_amount' %}" method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input style="margin-left:11%;" type="submit" value="Transfer">
+        </form>
+{% endblock %}
+<!--        -->
+<!--        <form action="{% url 'transaction:request_amount' %}" method="post">-->
+<!--            {% csrf_token %}-->
+<!--            <input type="hidden" name="requester" value="{{user.get_username}}"><br><br>-->
+<!--            <label for="requested_user">Requested User</label>-->
+<!--            <select name="requested_user">-->
+<!--                {% if user_list %}-->
+<!--                    {% for i in user_list %}-->
+<!--                        <option>{{ i.requested_user }}</option>-->
+<!--                    {% endfor %}-->
+<!--                {% endif %}-->
+<!--            </select><br><br>-->
+<!--            <label for="request_amount">Amount</label>-->
+<!--            <input type="number" name="request_amount"><br><br>-->
+<!--            <label for="attachment">Message</label>-->
+<!--            <textarea name="attachment"></textarea><br><br>-->
+<!--            <input style="margin-left:11%;" type="submit" value="Transfer">-->
+<!--        </form>-->
+<!--    </div>-->
